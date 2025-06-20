@@ -168,5 +168,233 @@
   };
 </script>
 
+</body><!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>لك دار - منصة تملك العقار بسهولة</title>
+  <style>
+    body { font-family: Arial, sans-serif; direction: rtl; margin: 0; padding: 0; background: #f4f7f9; }
+    header { background: #2f855a; color: white; padding: 1rem; text-align: center; display: flex; align-items: center; justify-content: center; }
+    header img { height: 50px; margin-left: 1rem; }
+    nav a { color: white; margin: 0 1rem; text-decoration: none; font-weight: bold; }
+    .container { max-width: 900px; margin: 2rem auto; background: white; padding: 1rem; border-radius: 8px; }
+    .search { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .search input[type="text"], .search select { flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; min-width: 150px; }
+    .search button { padding: 0.5rem 1rem; background: #2f855a; border: none; color: white; border-radius: 4px; cursor: pointer; }
+    .search button:hover { background: #276749; }
+    .properties, .featured-properties { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+    .property, .featured-property { background: #e6fffa; padding: 1rem; border-radius: 6px; width: calc(50% - 1rem); box-shadow: 0 0 6px #9ae6b4; }
+    .property img, .featured-property img { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; }
+    .property h3, .featured-property h3 { margin: 0.5rem 0; color: #2f855a; }
+    .property p, .featured-property p { margin: 0.3rem 0; color: #2d3748; }
+    footer { text-align: center; margin: 2rem 0 1rem; font-size: 0.9rem; color: #555; }
+    .footer-links a { color: #2f855a; margin: 0 0.5rem; text-decoration: none; }
+    .footer-links a:hover { text-decoration: underline; }
+    .message-box { background: #c6f6d5; padding: 1rem; margin: 1rem 0; border-radius: 6px; font-size: 1rem; color: #22543d; text-align: center; }
+    form { margin-top: 2rem; background: #fefcbf; padding: 1rem; border-radius: 6px; }
+    label { display: block; margin: 0.5rem 0 0.2rem; color: #2d3748; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="Lak Dar Logo" />
+  <h1>لك دار</h1>
+</header>
+
+<nav style="text-align:center; background:#276749; padding:0.5rem;">
+  <a href="index.html">الرئيسية</a>
+  <a href="#addForm">أضف عقارك</a>
+  <a href="contact.html">تواصل معنا</a>
+  <a href="terms.html">الشروط والأمانة</a>
+</nav>
+
+<div class="container">
+  <div class="search">
+    <input type="text" id="searchInput" placeholder="ابحث عن عقارك (شقة، بيت، أرض)" />
+    <select id="citySelect">
+      <option value="">المدينة</option>
+      <option value="الرياض">الرياض</option>
+      <option value="جدة">جدة</option>
+      <option value="الدمام">الدمام</option>
+    </select>
+    <select id="typeSelect">
+      <option value="">نوع العقار</option>
+      <option value="شقة">شقة</option>
+      <option value="فيلا">فيلا</option>
+      <option value="أرض">أرض</option>
+    </select>
+    <input type="number" id="minPrice" placeholder="الحد الأدنى للسعر" />
+    <input type="number" id="maxPrice" placeholder="الحد الأقصى للسعر" />
+    <button onclick="searchProperties()">بحث</button>
+  </div>
+
+  <div class="message-box">
+    أهلاً بك في <strong>لك دار</strong>، منصتك الآمنة والذكية لامتلاك العقار بسهولة. لا وسطاء، لا عمولات خفية — فقط عقارك المناسب بأمان وشفافية.
+  </div>
+
+  <h2>✨ عقارات مميزة</h2>
+  <div class="featured-properties" id="featuredPropertiesList"></div>
+
+  <h2>جميع العقارات</h2>
+  <div class="properties" id="propertiesList"></div>
+
+  <form id="addForm">
+    <h2>📌 أضف عقارك</h2>
+    <label for="title">عنوان العقار</label>
+    <input type="text" id="title" placeholder="مثال: شقة فاخرة في الرياض" />
+
+    <label for="city">المدينة</label>
+    <select id="city">
+      <option value="">اختر المدينة</option>
+      <option value="الرياض">الرياض</option>
+      <option value="جدة">جدة</option>
+      <option value="الدمام">الدمام</option>
+    </select>
+
+    <label for="type">نوع العقار</label>
+    <select id="type">
+      <option value="">اختر نوع العقار</option>
+      <option value="شقة">شقة</option>
+      <option value="فيلا">فيلا</option>
+      <option value="أرض">أرض</option>
+    </select>
+
+    <label for="price">السعر</label>
+    <input type="text" id="price" placeholder="مثال: 750,000 ريال" />
+
+    <label for="image">رابط الصورة</label>
+    <input type="text" id="image" placeholder="ضع رابط لصورة العقار" />
+
+    <button type="button" onclick="addProperty()">إضافة العقار</button>
+  </form>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="terms.html">الشروط والأمانة</a> | <a href="contact.html">تواصل معنا</a>
+  </div>
+  &copy; 2025 لك دار
+</footer>
+
+<script>
+  const properties = [
+    {
+      id: 1,
+      title: "شقة حديثة في الرياض",
+      city: "الرياض",
+      type: "شقة",
+      price: 500000,
+      priceText: "500,000 ريال",
+      image: "https://via.placeholder.com/400x150?text=شقة+في+الرياض",
+      detailsPage: "property-details.html",
+      featured: true
+    },
+    {
+      id: 2,
+      title: "أرض سكنية في جدة",
+      city: "جدة",
+      type: "أرض",
+      price: 1200000,
+      priceText: "1,200,000 ريال",
+      image: "https://via.placeholder.com/400x150?text=أرض+في+جدة",
+      detailsPage: "property-details.html",
+      featured: false
+    },
+    {
+      id: 3,
+      title: "فيلا فاخرة في الدمام",
+      city: "الدمام",
+      type: "فيلا",
+      price: 2500000,
+      priceText: "2,500,000 ريال",
+      image: "https://via.placeholder.com/400x150?text=فيلا+في+الدمام",
+      detailsPage: "property-details.html",
+      featured: true
+    }
+  ];
+
+  function displayProperties(list, containerId, isFeatured = false) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    if (list.length === 0) {
+      container.innerHTML = "<p>لا توجد عقارات مطابقة للبحث.</p>";
+      return;
+    }
+    list.forEach(prop => {
+      const propertyClass = isFeatured ? "featured-property" : "property";
+      container.innerHTML += `
+        <div class="${propertyClass}">
+          <img src="${prop.image}" alt="${prop.title}" />
+          <h3>${prop.title}</h3>
+          <p>المدينة: ${prop.city}</p>
+          <p>النوع: ${prop.type}</p>
+          <p>السعر: ${prop.priceText}</p>
+          <a href="${prop.detailsPage}">تفاصيل</a>
+        </div>
+      `;
+    });
+  }
+
+  function searchProperties() {
+    const searchText = document.getElementById("searchInput").value.trim();
+    const city = document.getElementById("citySelect").value;
+    const type = document.getElementById("typeSelect").value;
+    const minPrice = parseFloat(document.getElementById("minPrice").value);
+    const maxPrice = parseFloat(document.getElementById("maxPrice").value);
+
+    const filtered = properties.filter(prop => {
+      const matchesText = prop.title.includes(searchText) || searchText === "";
+      const matchesCity = prop.city === city || city === "";
+      const matchesType = prop.type === type || type === "";
+      const matchesMinPrice = isNaN(minPrice) || prop.price >= minPrice;
+      const matchesMaxPrice = isNaN(maxPrice) || prop.price <= maxPrice;
+
+      return matchesText && matchesCity && matchesType && matchesMinPrice && matchesMaxPrice;
+    });
+    displayProperties(filtered, "propertiesList");
+  }
+
+  function addProperty() {
+    const title = document.getElementById("title").value.trim();
+    const city = document.getElementById("city").value;
+    const type = document.getElementById("type").value;
+    const priceText = document.getElementById("price").value.trim();
+    const image = document.getElementById("image").value.trim();
+    const price = parseFloat(priceText.replace(/[^0-9.-]+/g,""));
+
+    if (!title || !city || !type || !priceText || !image) {
+      alert("يرجى تعبئة جميع الحقول.");
+      return;
+    }
+    const newProperty = {
+      id: properties.length + 1,
+      title,
+      city,
+      type,
+      price,
+      priceText,
+      image,
+      detailsPage: "property-details.html",
+      featured: false
+    };
+    properties.push(newProperty);
+    displayProperties(properties, "propertiesList");
+    displayProperties(properties.filter(p => p.featured), "featuredPropertiesList", true);
+    document.getElementById("addForm").reset();
+    alert("تمت إضافة العقار بنجاح!");
+  }
+
+  window.onload = () => {
+    displayProperties(properties, "propertiesList");
+    displayProperties(properties.filter(p => p.featured), "featuredPropertiesList", true);
+  };
+</script>
+
 </body>
+</html>
+
+
 </html>
